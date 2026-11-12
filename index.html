@@ -85,6 +85,19 @@
   .skills dt { font-weight: 600; }
   .skills dd { margin: 0; color: var(--muted); }
 
+  figure { margin: 0; }
+  .card figure { margin: 4px 0 16px; }
+  .card figure img { width: 100%; max-height: 380px; object-fit: contain; background: var(--chip); border-radius: 8px; display: block; }
+  figcaption { font-size: 13px; color: var(--muted); margin-top: 6px; }
+  .hw { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 8px; }
+  .hw .card { margin: 0; display: flex; flex-direction: column; }
+  .hw p { font-size: 14.5px; color: var(--muted); margin-bottom: 0; }
+  .gallery { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-bottom: 14px; }
+  .gallery img, .hw .single img { width: 100%; aspect-ratio: 3 / 4; object-fit: cover; border-radius: 8px; display: block; background: var(--chip); }
+  .hw .single img { aspect-ratio: 4 / 3; margin-bottom: 14px; }
+  .gallery a, .hw .single a { display: block; }
+  @media (max-width: 640px) { .hw { grid-template-columns: 1fr; } }
+
   footer { border-top: 1px solid var(--line); padding: 28px 0 48px; color: var(--muted); font-size: 14px; }
 
   @media (max-width: 640px) {
@@ -151,6 +164,10 @@
   <div class="card">
     <h3>Low-Cost Indoor Air Quality Monitoring and Short-Term Forecasting on ESP32 Using a Humidity-Compensated MOS Sensor and TinyML</h3>
     <div class="venue">Submitted to SN Computer Science</div>
+    <figure>
+      <a href="images/air-quality-monitor.webp"><img src="images/air-quality-monitor.webp" alt="The hand-built air quality monitor: ESP32 DevKit, MP-135 gas sensor, DHT22, SSD1306 OLED and USB-C 5 V input, powered by a power bank" loading="lazy"></a>
+      <figcaption>The hand-built monitor: ESP32 DevKit, MP-135 MOS gas sensor, DHT22, SSD1306 OLED and USB-C 5 V input.</figcaption>
+    </figure>
     <ul>
       <li>Designed and hand-wired an ESP32 + Winsen MP-135 MOS gas sensor + DHT22 monitor and deployed it in an occupied room in Dhaka</li>
       <li>Built a humidity- and temperature-compensated, drift-robust relative Pollution Index with a rolling 3-hour baseline</li>
@@ -218,11 +235,21 @@
     </div>
   </div>
 
-  <h3 style="margin-top:26px">Hardware projects</h3>
-  <ul>
-    <li><b>Smart Water Level Monitor &amp; Automatic Pump Control</b>: ESP32, ultrasonic sensor, OLED display, automatic pump control, buzzer alert and remote monitoring over Blynk IoT</li>
-    <li><b>Obstacle-Avoiding Robot Car</b>: Arduino, ultrasonic sensor and motor driver for autonomous navigation</li>
-  </ul>
+  <h3 style="margin-top:28px; margin-bottom:12px">Hardware projects</h3>
+  <div class="hw">
+    <div class="card">
+      <div class="single"><a href="images/water-level-system.webp"><img src="images/water-level-system.webp" alt="Water level prototype: two water tanks, an ultrasonic sensor and a relay module on a model base" loading="lazy"></a></div>
+      <h3>Smart Water Level Monitor &amp; Automatic Pump Control</h3>
+      <p>ESP32 and ultrasonic sensor show the live water level on an OLED screen. A relay switches the pump on and off automatically, with a buzzer alert and remote monitoring over Blynk IoT.</p>
+    </div>
+    <div class="card">
+      <div class="gallery">
+        <a href="images/robot-car-front.webp"><img src="images/robot-car-front.webp" alt="Robot car front view with the ultrasonic sensor on a servo mount" loading="lazy"></a>
+        <a href="images/robot-car-electronics.webp"><img src="images/robot-car-electronics.webp" alt="Robot car electronics: Arduino with motor driver shield, 18650 battery pack, USB-C charging modules and power switch" loading="lazy"></a>      </div>
+      <h3>Obstacle-Avoiding Robot Car</h3>
+      <p>Arduino with a motor driver shield and an ultrasonic sensor on a servo that scans for obstacles and steers around them on its own. Powered by rechargeable 18650 cells with USB-C charging modules.</p>
+    </div>
+  </div>
 </section>
 
 <section id="publications">
