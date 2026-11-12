@@ -89,15 +89,13 @@
   .card figure { margin: 4px 0 16px; }
   .card figure img { width: 100%; max-height: 380px; object-fit: contain; background: var(--chip); border-radius: 8px; display: block; }
   figcaption { font-size: 13px; color: var(--muted); margin-top: 6px; }
-  .hw { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 8px; }
-  .hw .card { margin: 0; display: flex; flex-direction: column; }
+  .hw { display: grid; gap: 16px; margin-top: 8px; }
+  .hw .card { margin: 0; }
   .hw p { font-size: 14.5px; color: var(--muted); margin-bottom: 0; }
-  .gallery { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-bottom: 14px; }
-  .gallery img, .hw .single img { width: 100%; aspect-ratio: 3 / 4; object-fit: cover; border-radius: 8px; display: block; background: var(--chip); }
-  .hw .single img { aspect-ratio: 4 / 3; object-position: 50% 62%; margin-bottom: 14px; }
-  .gallery img { object-position: 50% 55%; }
+  .gallery { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 14px; }
+  .gallery img, .hw .single img { width: 100%; height: auto; border-radius: 8px; display: block; background: var(--chip); }
+  .hw .single { max-width: 440px; margin: 0 auto 14px; }
   .gallery a, .hw .single a { display: block; }
-  @media (max-width: 640px) { .hw { grid-template-columns: 1fr; } }
 
   footer { border-top: 1px solid var(--line); padding: 28px 0 48px; color: var(--muted); font-size: 14px; }
 
@@ -239,14 +237,14 @@
   <h3 style="margin-top:28px; margin-bottom:12px">Hardware projects</h3>
   <div class="hw">
     <div class="card">
-      <div class="single"><a href="images/water-level-system.webp"><img src="images/water-level-system.webp" alt="Water level prototype: two water tanks, an ultrasonic sensor and a relay module on a model base" loading="lazy"></a></div>
+      <div class="single"><a href="images/water-level-system-labeled.webp"><img src="images/water-level-system-labeled.webp" alt="Water level prototype: two water tanks, an ultrasonic sensor and a relay module on a model base" loading="lazy"></a></div>
       <h3>Smart Water Level Monitor &amp; Automatic Pump Control</h3>
       <p>ESP32 and ultrasonic sensor show the live water level on an OLED screen. A relay switches the pump on and off automatically, with a buzzer alert and remote monitoring over Blynk IoT.</p>
     </div>
     <div class="card">
       <div class="gallery">
-        <a href="images/robot-car-front.webp"><img src="images/robot-car-front.webp" alt="Robot car front view with the ultrasonic sensor on a servo mount" loading="lazy"></a>
-        <a href="images/robot-car-electronics.webp"><img src="images/robot-car-electronics.webp" alt="Robot car electronics: Arduino with motor driver shield, 18650 battery pack, USB-C charging modules and power switch" loading="lazy"></a>      </div>
+        <a href="images/robot-car-front-labeled.webp"><img src="images/robot-car-front-labeled.webp" alt="Robot car front view with the ultrasonic sensor on a servo mount" loading="lazy"></a>
+        <a href="images/robot-car-electronics-labeled.webp"><img src="images/robot-car-electronics-labeled.webp" alt="Robot car electronics: Arduino with motor driver shield, 18650 battery pack, USB-C charging modules and power switch" loading="lazy"></a>      </div>
       <h3>Obstacle-Avoiding Robot Car</h3>
       <p>Arduino with a motor driver shield and an ultrasonic sensor on a servo that scans for obstacles and steers around them on its own. Powered by rechargeable 18650 cells with USB-C charging modules.</p>
     </div>
