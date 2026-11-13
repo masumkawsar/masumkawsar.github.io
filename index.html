@@ -10,160 +10,280 @@
 <meta property="og:image" content="https://masumkawsar.github.io/images/profile.webp">
 <link rel="icon" type="image/png" href="images/favicon-64.png">
 <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+<script>
+  /* apply saved theme before paint (no flash) */
+  (function () { try { var t = localStorage.getItem('theme'); if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t); } catch (e) {} })();
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,500;8..60,600;8..60,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #fbfaf7; --surface: #ffffff; --text: #1d1f23; --muted: #5d6470; --line: #e6e2da;
-    --accent: #0f6b5c; --accent-soft: #e3f1ee; --chip: #f1eee8;
+    --bg: #f7f7f4; --surface: #ffffff; --surface-2: #f1f2ee; --text: #16191d; --body: #33393f; --muted: #646c76;
+    --line: #e3e4de; --accent: #0d6b5b; --accent-2: #0f8a74; --accent-soft: #e2f2ee; --chip: #eef0eb;
+    --shadow: 0 1px 2px rgba(16, 24, 32, .05), 0 6px 20px rgba(16, 24, 32, .05);
+    --on-accent: #ffffff;
   }
   @media (prefers-color-scheme: dark) {
     :root:not([data-theme="light"]) {
-      --bg: #121417; --surface: #191c20; --text: #e7e9ec; --muted: #9aa2ad; --line: #2a2f36;
-      --accent: #5cc5ae; --accent-soft: #1b302c; --chip: #22262c;
+      --bg: #0e1215; --surface: #151b20; --surface-2: #1a2127; --text: #eef1f3; --body: #c9d0d6; --muted: #8f9aa4;
+      --line: #252e35; --accent: #5fd0b7; --accent-2: #4bbfa6; --accent-soft: #143029; --chip: #1c242a;
+      --shadow: 0 1px 2px rgba(0, 0, 0, .3), 0 8px 24px rgba(0, 0, 0, .25);
+      --on-accent: #06211b;
     }
   }
   :root[data-theme="dark"] {
-    --bg: #121417; --surface: #191c20; --text: #e7e9ec; --muted: #9aa2ad; --line: #2a2f36;
-    --accent: #5cc5ae; --accent-soft: #1b302c; --chip: #22262c;
+    --bg: #0e1215; --surface: #151b20; --surface-2: #1a2127; --text: #eef1f3; --body: #c9d0d6; --muted: #8f9aa4;
+    --line: #252e35; --accent: #5fd0b7; --accent-2: #4bbfa6; --accent-soft: #143029; --chip: #1c242a;
+    --shadow: 0 1px 2px rgba(0, 0, 0, .3), 0 8px 24px rgba(0, 0, 0, .25);
+    --on-accent: #06211b;
   }
+
   * { box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
-  body { margin: 0; background: var(--bg); color: var(--text); font: 16px/1.65 Inter, system-ui, sans-serif; }
-  a { color: var(--accent); text-decoration: none; }
+  html { scroll-behavior: smooth; scroll-padding-top: 72px; }
+  body { margin: 0; background: var(--bg); color: var(--body); font: 16.5px/1.7 Inter, system-ui, -apple-system, sans-serif;
+         -webkit-font-smoothing: antialiased; transition: background-color .25s, color .25s; }
+  a { color: var(--accent); text-decoration: none; text-underline-offset: 3px; }
   a:hover { text-decoration: underline; }
-  .wrap { max-width: 920px; margin: 0 auto; padding: 0 20px; }
+  b, strong { color: var(--text); font-weight: 600; }
+  i { font-style: italic; }
+  .wrap { max-width: 960px; margin: 0 auto; padding: 0 20px; }
+  .prose { max-width: 70ch; }
 
-  nav { position: sticky; top: 0; z-index: 5; background: color-mix(in srgb, var(--bg) 88%, transparent);
-        backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
-  nav .wrap { display: flex; align-items: center; gap: 20px; height: 56px; overflow-x: auto; }
-  nav .brand { font-weight: 600; color: var(--text); white-space: nowrap; margin-right: auto; }
-  nav a.l { color: var(--muted); font-size: 14px; white-space: nowrap; }
+  /* ---------- nav ---------- */
+  nav { position: sticky; top: 0; z-index: 10; background: color-mix(in srgb, var(--bg) 86%, transparent);
+        backdrop-filter: saturate(1.4) blur(10px); -webkit-backdrop-filter: saturate(1.4) blur(10px); border-bottom: 1px solid var(--line); }
+  nav .wrap { display: flex; align-items: center; gap: 22px; height: 60px; }
+  nav .brand { font-weight: 700; color: var(--text); white-space: nowrap; margin-right: auto; letter-spacing: -.01em; }
+  nav .brand span { color: var(--accent); }
+  nav a.l { color: var(--muted); font-size: 14.5px; font-weight: 500; white-space: nowrap; }
   nav a.l:hover { color: var(--text); text-decoration: none; }
-
-  header { padding: 56px 0 40px; display: grid; grid-template-columns: 168px 1fr; gap: 36px; align-items: center; }
-  header img { width: 168px; height: 168px; border-radius: 50%; object-fit: cover; border: 1px solid var(--line); }
-  h1 { font-family: "Source Serif 4", Georgia, serif; font-weight: 600; font-size: 40px; line-height: 1.15; margin: 0 0 6px; }
-  .role { color: var(--muted); margin: 0 0 14px; }
-  .badge { display: inline-block; background: var(--accent-soft); color: var(--accent); font-weight: 600; font-size: 13px;
-           padding: 4px 12px; border-radius: 999px; margin-bottom: 16px; }
-  .links { display: flex; flex-wrap: wrap; gap: 8px; }
-  .btn { display: inline-flex; align-items: center; gap: 6px; padding: 7px 14px; border: 1px solid var(--line); border-radius: 8px;
-         background: var(--surface); color: var(--text); font-size: 14px; font-weight: 500; }
-  .btn:hover { border-color: var(--accent); text-decoration: none; }
-  .btn.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
-  :root[data-theme="dark"] .btn.primary { color: #0d1513; }
-  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .btn.primary { color: #0d1513; } }
-  .btn svg { width: 16px; height: 16px; fill: currentColor; }
-
-  section { padding: 36px 0; border-top: 1px solid var(--line); }
-  h2 { font-family: "Source Serif 4", Georgia, serif; font-weight: 600; font-size: 26px; margin: 0 0 18px; }
-  h3 { font-size: 17px; margin: 0 0 4px; line-height: 1.4; }
-  p { margin: 0 0 12px; }
-  .muted { color: var(--muted); }
-  .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
-  .chip { background: var(--chip); border-radius: 6px; padding: 3px 10px; font-size: 13.5px; }
-
-  .card { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 22px 24px; margin-bottom: 16px; }
-  .card .venue { font-size: 13.5px; color: var(--muted); margin-bottom: 10px; }
-  .card ul { margin: 0 0 12px; padding-left: 20px; }
-  .card li { margin-bottom: 4px; }
-  .stats { display: flex; flex-wrap: wrap; gap: 10px; margin: 12px 0 14px; }
-  .stat { border: 1px solid var(--line); border-radius: 8px; padding: 6px 12px; font-size: 13px; color: var(--muted); }
-  .stat b { display: block; font-size: 17px; color: var(--text); font-variant-numeric: tabular-nums; }
-  .card .links .btn { font-size: 13px; padding: 5px 11px; }
-
-  ol.pubs { padding-left: 22px; margin: 0; }
-  ol.pubs li { margin-bottom: 14px; }
-  .status { display: inline-block; font-size: 12px; font-weight: 600; padding: 1px 8px; border-radius: 4px; margin-left: 4px; vertical-align: 1px; }
-  .status.pub { background: var(--accent-soft); color: var(--accent); }
-  .status.sub { background: var(--chip); color: var(--muted); }
-
-  .edu { display: grid; grid-template-columns: 1fr auto; gap: 2px 16px; margin-bottom: 14px; }
-  .edu .yr { color: var(--muted); font-size: 14px; text-align: right; }
-  .skills { display: grid; grid-template-columns: 190px 1fr; gap: 10px 20px; }
-  .skills dt { font-weight: 600; }
-  .skills dd { margin: 0; color: var(--muted); }
-
-  ul.news { list-style: none; padding: 0; margin: 0; }
-  ul.news li { display: grid; grid-template-columns: 92px 1fr; gap: 12px; padding: 8px 0; border-bottom: 1px dashed var(--line); }
-  ul.news li:last-child { border-bottom: 0; }
-  ul.news .when { font-weight: 600; color: var(--accent); font-size: 14px; padding-top: 1px; font-variant-numeric: tabular-nums; }
-  @media (max-width: 640px) { ul.news li { grid-template-columns: 1fr; gap: 0; } }
-  figure { margin: 0; }
-  .card figure { margin: 4px 0 16px; }
-  .card figure img { width: 100%; max-height: 380px; object-fit: contain; background: var(--chip); border-radius: 8px; display: block; }
-  figcaption { font-size: 13px; color: var(--muted); margin-top: 6px; }
-  .hw { display: grid; gap: 16px; margin-top: 8px; }
-  .hw .card { margin: 0; }
-  .hw p { font-size: 14.5px; color: var(--muted); margin-bottom: 0; }
-  .gallery { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 14px; }
-  .gallery img, .hw .single img { width: 100%; height: auto; border-radius: 8px; display: block; background: var(--chip); }
-  .hw .single { max-width: 440px; margin: 0 auto 14px; }
-  .gallery a, .hw .single a { display: block; }
-
-  footer { border-top: 1px solid var(--line); padding: 28px 0 48px; color: var(--muted); font-size: 14px; }
-
-  @media (max-width: 640px) {
-    header { grid-template-columns: 1fr; text-align: left; gap: 20px; padding-top: 36px; }
-    header img { width: 112px; height: 112px; }
-    h1 { font-size: 32px; }
-    .skills { grid-template-columns: 1fr; gap: 2px; }
-    .skills dd { margin-bottom: 10px; }
-    .card { padding: 18px; }
-    nav .l.hide-sm { display: none; }
+  .theme-btn { display: inline-grid; place-items: center; width: 38px; height: 38px; border-radius: 10px; border: 1px solid var(--line);
+               background: var(--surface); color: var(--text); cursor: pointer; flex: none; transition: border-color .2s, transform .2s; }
+  .theme-btn:hover { border-color: var(--accent); }
+  .theme-btn:active { transform: scale(.94); }
+  .theme-btn svg { width: 18px; height: 18px; }
+  .theme-btn .sun { display: none; }
+  :root[data-theme="dark"] .theme-btn .sun { display: block; }
+  :root[data-theme="dark"] .theme-btn .moon { display: none; }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) .theme-btn .sun { display: block; }
+    :root:not([data-theme="light"]) .theme-btn .moon { display: none; }
   }
+
+  /* ---------- hero ---------- */
+  header.hero { padding: 64px 0 52px; display: grid; grid-template-columns: 184px 1fr; gap: 44px; align-items: center; }
+  .avatar { width: 184px; height: 184px; border-radius: 50%; object-fit: cover; display: block;
+            border: 4px solid var(--surface); box-shadow: 0 0 0 1px var(--line), var(--shadow); }
+  .eyebrow { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; letter-spacing: .02em;
+             color: var(--accent); background: var(--accent-soft); padding: 5px 12px; border-radius: 999px; margin-bottom: 14px; }
+  .eyebrow::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--accent); }
+  h1 { font-family: "Source Serif 4", Georgia, serif; font-weight: 700; color: var(--text); font-size: 46px; line-height: 1.08;
+       letter-spacing: -.015em; margin: 0 0 10px; }
+  .tagline { font-size: 18.5px; color: var(--text); margin: 0 0 6px; font-weight: 500; }
+  .role { color: var(--muted); margin: 0 0 22px; font-size: 15px; }
+  .links { display: flex; flex-wrap: wrap; gap: 8px; }
+  .btn { display: inline-flex; align-items: center; gap: 7px; padding: 8px 14px; border: 1px solid var(--line); border-radius: 10px;
+         background: var(--surface); color: var(--text); font-size: 14px; font-weight: 500; line-height: 1.2;
+         transition: border-color .2s, transform .2s, background-color .2s; }
+  .btn:hover { border-color: var(--accent); text-decoration: none; transform: translateY(-1px); }
+  .btn.primary { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
+  .btn svg { width: 16px; height: 16px; fill: currentColor; flex: none; }
+
+  /* ---------- sections ---------- */
+  section { padding: 56px 0; border-top: 1px solid var(--line); }
+  .sec-head { margin-bottom: 26px; }
+  .kicker { font-size: 12.5px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--accent); margin: 0 0 6px; }
+  h2 { font-family: "Source Serif 4", Georgia, serif; font-weight: 600; color: var(--text); font-size: 32px; line-height: 1.2;
+       letter-spacing: -.01em; margin: 0; }
+  h3 { color: var(--text); font-size: 18px; font-weight: 600; line-height: 1.4; margin: 0 0 6px; letter-spacing: -.005em; }
+  p { margin: 0 0 14px; }
+  .lead { font-size: 19px; line-height: 1.65; color: var(--text); }
+  .muted { color: var(--muted); }
+
+  /* about: research directions */
+  .subhead { font-size: 15px; font-weight: 600; color: var(--text); margin: 30px 0 14px; }
+  .dirs { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+  .dir { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 18px 20px; box-shadow: var(--shadow); }
+  .dir .ic { width: 36px; height: 36px; border-radius: 10px; background: var(--accent-soft); color: var(--accent);
+             display: grid; place-items: center; margin-bottom: 10px; }
+  .dir .ic svg { width: 19px; height: 19px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .dir h4 { margin: 0 0 4px; font-size: 15.5px; color: var(--text); font-weight: 600; }
+  .dir p { margin: 0; font-size: 14.5px; color: var(--muted); line-height: 1.6; }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 24px; }
+  .chip { background: var(--chip); color: var(--text); border-radius: 999px; padding: 5px 13px; font-size: 13.5px; font-weight: 500; }
+
+  /* news timeline */
+  .timeline { list-style: none; margin: 0; padding: 0 0 0 4px; position: relative; }
+  .timeline::before { content: ""; position: absolute; left: 9px; top: 8px; bottom: 8px; width: 2px; background: var(--line); }
+  .timeline li { position: relative; padding: 0 0 22px 36px; }
+  .timeline li:last-child { padding-bottom: 0; }
+  .timeline li::before { content: ""; position: absolute; left: 0; top: 6px; width: 12px; height: 12px; border-radius: 50%;
+                         background: var(--surface); border: 3px solid var(--accent); }
+  .timeline .when { display: block; font-size: 13px; font-weight: 700; letter-spacing: .04em; color: var(--accent); text-transform: uppercase; margin-bottom: 2px; }
+
+  /* research cards */
+  .card { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 26px 28px; margin-bottom: 20px; box-shadow: var(--shadow); }
+  .card-top { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 10px; margin-bottom: 10px; }
+  .pill { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; padding: 3px 10px; border-radius: 999px; letter-spacing: .01em; }
+  .pill.pub { background: var(--accent-soft); color: var(--accent); }
+  .pill.sub { background: var(--chip); color: var(--muted); }
+  .pill.pub::before, .pill.sub::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+  .venue { font-size: 13.5px; color: var(--muted); }
+  .card h3 { font-size: 19px; margin-bottom: 14px; }
+  .card ul.points { list-style: none; margin: 0 0 18px; padding: 0; }
+  .card ul.points li { position: relative; padding-left: 22px; margin-bottom: 8px; font-size: 15.5px; }
+  .card ul.points li::before { content: ""; position: absolute; left: 4px; top: .72em; width: 7px; height: 7px; border-radius: 2px;
+                               background: var(--accent); transform: rotate(45deg); }
+  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(128px, 1fr)); gap: 10px; margin: 0 0 18px; }
+  .stat { background: var(--surface-2); border-radius: 12px; padding: 12px 14px; font-size: 12.5px; color: var(--muted); line-height: 1.4; }
+  .stat b { display: block; font-size: 21px; font-weight: 700; color: var(--text); letter-spacing: -.01em; font-variant-numeric: tabular-nums; margin-bottom: 2px; }
+  .card .links .btn { font-size: 13.5px; padding: 7px 12px; }
+  figure { margin: 0; }
+  .card figure { margin: 0 0 18px; }
+  .card figure img { width: 100%; max-height: 400px; object-fit: contain; background: var(--surface-2); border-radius: 12px; display: block; }
+  figcaption { font-size: 13px; color: var(--muted); margin-top: 8px; }
+
+  /* hardware */
+  .hw-title { font-family: "Source Serif 4", Georgia, serif; font-size: 23px; font-weight: 600; color: var(--text); margin: 40px 0 16px; }
+  .hw { display: grid; gap: 20px; }
+  .hw .card { margin: 0; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); gap: 26px; align-items: center; }
+  .hw .media img { width: 100%; height: auto; border-radius: 12px; display: block; background: var(--surface-2); }
+  .hw .media.two { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .hw .media a { display: block; }
+  .hw p { color: var(--muted); font-size: 15px; margin: 0; }
+
+  /* publications */
+  ol.pubs { list-style: none; counter-reset: pub; margin: 0; padding: 0; display: grid; gap: 14px; }
+  ol.pubs li { counter-increment: pub; position: relative; background: var(--surface); border: 1px solid var(--line);
+               border-radius: 14px; padding: 18px 22px 18px 64px; box-shadow: var(--shadow); }
+  ol.pubs li::before { content: counter(pub); position: absolute; left: 20px; top: 18px; width: 30px; height: 30px; border-radius: 9px;
+                       background: var(--accent-soft); color: var(--accent); font-weight: 700; font-size: 14px; display: grid; place-items: center; }
+  .pub-title { display: block; color: var(--text); font-weight: 600; font-size: 16px; line-height: 1.5; margin-bottom: 4px; }
+  .pub-meta { font-size: 14.5px; color: var(--muted); }
+  .pub-meta b { color: var(--text); }
+  .pub-foot { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; margin-top: 8px; font-size: 14px; }
+
+  /* education */
+  .edu-list { display: grid; gap: 12px; }
+  .edu { display: grid; grid-template-columns: 1fr auto; gap: 4px 16px; align-items: start; background: var(--surface);
+         border: 1px solid var(--line); border-radius: 14px; padding: 16px 20px; box-shadow: var(--shadow); }
+  .edu b { font-size: 16px; }
+  .edu .yr { font-size: 13px; font-weight: 600; color: var(--accent); background: var(--accent-soft); padding: 3px 10px; border-radius: 999px; white-space: nowrap; }
+  .edu .muted { font-size: 14.5px; }
+  .coursework { margin-top: 18px; }
+  .coursework .chip { font-weight: 400; }
+
+  /* skills */
+  .skills { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+  .skill { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 18px 20px; box-shadow: var(--shadow); }
+  .skill h4 { margin: 0 0 10px; font-size: 13px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); }
+  .skill .chips { margin-top: 0; gap: 6px; }
+  .skill .chip { font-size: 13px; padding: 4px 11px; font-weight: 400; }
+  .skill.wide { grid-column: 1 / -1; }
+
+  footer { border-top: 1px solid var(--line); padding: 32px 0 52px; color: var(--muted); font-size: 14.5px; }
+  footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px 20px; }
+
+  @media (max-width: 760px) {
+    .hw .card { grid-template-columns: 1fr; }
+    .dirs, .skills { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 640px) {
+    body { font-size: 16px; }
+    nav .wrap { gap: 14px; }
+    nav .l.hide-sm { display: none; }
+    header.hero { grid-template-columns: 1fr; gap: 22px; padding: 40px 0 40px; }
+    .avatar { width: 120px; height: 120px; }
+    h1 { font-size: 34px; }
+    .tagline { font-size: 17px; }
+    .lead { font-size: 17.5px; }
+    section { padding: 44px 0; }
+    h2 { font-size: 27px; }
+    .card { padding: 20px 18px; border-radius: 14px; }
+    .card h3 { font-size: 17.5px; }
+    ol.pubs li { padding: 56px 18px 16px; }
+    ol.pubs li::before { left: 18px; top: 16px; }
+    .edu { grid-template-columns: 1fr; }
+    .edu .yr { justify-self: start; grid-row: 1; }
+  }
+  @media (max-width: 460px) { nav .l.hide-xs { display: none; } }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; scroll-behavior: auto !important; } }
 </style>
 </head>
 <body>
 
 <nav><div class="wrap">
-  <a class="brand" href="#">Md Masum Kawsar</a>
+  <a class="brand" href="#">Masum <span>Kawsar</span></a>
+  <a class="l hide-sm" href="#about">About</a>
   <a class="l hide-sm" href="#news">News</a>
   <a class="l" href="#research">Research</a>
-  <a class="l" href="#publications">Publications</a>
-  <a class="l hide-sm" href="#education">Education</a>
+  <a class="l hide-xs" href="#publications">Publications</a>
   <a class="l hide-sm" href="#skills">Skills</a>
   <a class="l" href="Md_Masum_Kawsar_CV.pdf">CV</a>
+  <button class="theme-btn" id="themeBtn" type="button" aria-label="Switch between light and dark mode" title="Light / dark mode">
+    <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z"/></svg>
+    <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4.5"/><path d="M12 1.5v2.5M12 20v2.5M4.6 4.6l1.8 1.8M17.6 17.6l1.8 1.8M1.5 12H4M20 12h2.5M4.6 19.4l1.8-1.8M17.6 6.4l1.8-1.8"/></svg>
+  </button>
 </div></nav>
 
 <main class="wrap">
 
-<header>
-  <img src="images/profile.webp" alt="Photo of Md Masum Kawsar">
+<header class="hero">
+  <img class="avatar" src="images/profile.webp" alt="Photo of Md Masum Kawsar">
   <div>
+    <span class="eyebrow">Open to research collaboration in IoT &amp; Edge AI</span>
     <h1>Md Masum Kawsar</h1>
+    <p class="tagline">Smart IoT · Edge AI &amp; TinyML · IoT Security</p>
     <p class="role">BSc in Computer Science &amp; Engineering, Daffodil International University · Dhaka, Bangladesh</p>
-    <span class="badge">Open to research collaboration in IoT &amp; Edge AI</span>
     <div class="links">
       <a class="btn primary" href="Md_Masum_Kawsar_CV.pdf"><svg viewBox="0 0 24 24"><path d="M12 16l-5-5h3V4h4v7h3l-5 5zm-7 2h14v2H5v-2z"/></svg>CV (PDF)</a>
       <a class="btn" href="mailto:masumkawsarpavel@gmail.com"><svg viewBox="0 0 24 24"><path d="M20 4H4a2 2 0 00-2 2v12a2 2 0 002 2h16a2 2 0 002-2V6a2 2 0 00-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>Email</a>
       <a class="btn" href="https://github.com/masumkawsar"><svg viewBox="0 0 24 24"><path d="M12 .5a12 12 0 00-3.8 23.4c.6.1.8-.3.8-.6v-2c-3.3.7-4-1.6-4-1.6-.6-1.4-1.4-1.8-1.4-1.8-1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.7-1.6-2.7-.3-5.5-1.3-5.5-6 0-1.2.5-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.2 0 0 1-.3 3.3 1.2a11.5 11.5 0 016 0C17.3 4.6 18.3 5 18.3 5c.7 1.7.2 2.9.1 3.2.8.8 1.2 1.9 1.2 3.1 0 4.6-2.8 5.6-5.5 5.9.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A12 12 0 0012 .5z"/></svg>GitHub</a>
       <a class="btn" href="https://www.linkedin.com/in/masumkawsar/"><svg viewBox="0 0 24 24"><path d="M20.4 20.5h-3.6v-5.6c0-1.3 0-3-1.8-3s-2.1 1.4-2.1 2.9v5.7H9.3V9h3.4v1.6c.5-.9 1.6-1.8 3.4-1.8 3.6 0 4.3 2.4 4.3 5.5v6.2zM5.3 7.4a2.1 2.1 0 110-4.2 2.1 2.1 0 010 4.2zM7.1 20.5H3.5V9h3.6v11.5z"/></svg>LinkedIn</a>
-      <a class="btn" href="https://orcid.org/0009-0005-3020-6274"><svg viewBox="0 0 24 24"><path d="M12 0a12 12 0 100 24 12 12 0 000-24zM7.4 17.4H5.9V7h1.5v10.4zM6.6 5.9a1 1 0 110-2 1 1 0 010 2zm4 11.5V7h4.1c3.9 0 5.6 2.8 5.6 5.2 0 2.6-2 5.2-5.6 5.2h-4.1zm1.5-1.3h2.4c3.4 0 4.2-2.6 4.2-3.9 0-2.1-1.3-3.9-4.2-3.9h-2.4v7.8z"/></svg>ORCID</a>
       <a class="btn" href="https://scholar.google.com/citations?user=l1JX234AAAAJ"><svg viewBox="0 0 24 24"><path d="M12 24a7 7 0 110-14 7 7 0 010 14zm0-24L0 9.5l4.8 3.9C5.9 10.8 8.7 9 12 9s6.1 1.8 7.2 4.4L24 9.5 12 0z"/></svg>Google Scholar</a>
+      <a class="btn" href="https://orcid.org/0009-0005-3020-6274"><svg viewBox="0 0 24 24"><path d="M12 0a12 12 0 100 24 12 12 0 000-24zM7.4 17.4H5.9V7h1.5v10.4zM6.6 5.9a1 1 0 110-2 1 1 0 010 2zm4 11.5V7h4.1c3.9 0 5.6 2.8 5.6 5.2 0 2.6-2 5.2-5.6 5.2h-4.1zm1.5-1.3h2.4c3.4 0 4.2-2.6 4.2-3.9 0-2.1-1.3-3.9-4.2-3.9h-2.4v7.8z"/></svg>ORCID</a>
     </div>
   </div>
 </header>
 
 <section id="about">
-  <h2>About</h2>
-  <p>I build <b>smart IoT systems that run machine learning at the edge</b>, close to the sensors that collect the data. My work
-  spans the full stack: designing and hand-wiring sensor hardware, calibrating sensors, collecting long real-world
-  deployments, training compact models, exporting them to C, and benchmarking them on the device. I evaluate this work
-  carefully, with nested grouped cross-validation, multiple seeds, and Wilcoxon tests with Holm correction.</p>
-  <p>So far I have built these systems on low-cost hardware such as the ESP32, because that is what I had access to.
-  Low cost is a constraint I know how to design for, not a limit on what I want to build. I am eager to work with
-  <b>richer multi-sensor setups and more capable edge hardware</b>, such as ARM-based boards, Raspberry Pi, NVIDIA Jetson,
-  and LoRa/BLE sensor networks, to build larger and more ambitious IoT systems.</p>
-  <p>The questions I am working on next:</p>
-  <ul>
-    <li><b>Reliable sensing at the edge</b>: models that stay accurate as sensors drift, age and respond to their environment</li>
-    <li><b>Multi-sensor IoT systems</b> that combine several sensor types for richer and more robust decisions</li>
-    <li><b>IoT intrusion detection that generalizes</b> to real networks, not only to the dataset it was trained on</li>
-    <li><b>Explainable, resource-aware ML</b> across the edge, from kilobyte-scale microcontrollers to more capable edge processors</li>
-  </ul>
+  <div class="sec-head"><p class="kicker">About</p><h2>Machine learning at the edge, from sensor to model</h2></div>
+  <div class="prose">
+    <p class="lead">I build <b>smart IoT systems that run machine learning at the edge</b>, close to the sensors that collect the data.</p>
+    <p>My work spans the full stack: designing and hand-wiring sensor hardware, calibrating sensors, collecting long real-world
+    deployments, training compact models, exporting them to C, and benchmarking them on the device. I evaluate this work
+    carefully, with nested grouped cross-validation, multiple seeds, and Wilcoxon tests with Holm correction.</p>
+    <p>So far I have built these systems on low-cost hardware such as the ESP32, because that is what I had access to.
+    Low cost is a constraint I know how to design for, not a limit on what I want to build. I am eager to work with
+    <b>richer multi-sensor setups and more capable edge hardware</b>, such as ARM-based boards, Raspberry Pi, NVIDIA Jetson,
+    and LoRa/BLE sensor networks, to build larger and more ambitious IoT systems.</p>
+  </div>
+
+  <p class="subhead">The questions I am working on next</p>
+  <div class="dirs">
+    <div class="dir">
+      <div class="ic"><svg viewBox="0 0 24 24"><path d="M3 12h4l3-8 4 16 3-8h4"/></svg></div>
+      <h4>Reliable sensing at the edge</h4>
+      <p>Models that stay accurate as sensors drift, age and respond to their environment.</p>
+    </div>
+    <div class="dir">
+      <div class="ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><circle cx="4" cy="5" r="2"/><circle cx="20" cy="5" r="2"/><circle cx="4" cy="19" r="2"/><circle cx="20" cy="19" r="2"/><path d="M5.6 6.4l4.2 3.8M18.4 6.4l-4.2 3.8M5.6 17.6l4.2-3.8M18.4 17.6l-4.2-3.8"/></svg></div>
+      <h4>Multi-sensor IoT systems</h4>
+      <p>Combining several sensor types for richer and more robust decisions.</p>
+    </div>
+    <div class="dir">
+      <div class="ic"><svg viewBox="0 0 24 24"><path d="M12 2l8 3v6c0 5-3.4 9.4-8 11-4.6-1.6-8-6-8-11V5l8-3z"/><path d="M9 12l2 2 4-4"/></svg></div>
+      <h4>IoT intrusion detection that generalizes</h4>
+      <p>Detectors that work on real networks, not only on the dataset they were trained on.</p>
+    </div>
+    <div class="dir">
+      <div class="ic"><svg viewBox="0 0 24 24"><rect x="5" y="5" width="14" height="14" rx="2"/><rect x="9" y="9" width="6" height="6"/><path d="M9 1v4M15 1v4M9 19v4M15 19v4M1 9h4M1 15h4M19 9h4M19 15h4"/></svg></div>
+      <h4>Explainable, resource-aware ML</h4>
+      <p>Across the edge, from kilobyte-scale microcontrollers to more capable edge processors.</p>
+    </div>
+  </div>
+
   <div class="chips">
     <span class="chip">Smart IoT Systems</span><span class="chip">Edge AI &amp; TinyML</span><span class="chip">IoT Security</span>
     <span class="chip">Embedded Machine Learning</span><span class="chip">Sensor Systems</span>
@@ -171,26 +291,26 @@
 </section>
 
 <section id="news">
-  <h2>News</h2>
-  <ul class="news">
-    <li><span class="when">Nov 2026</span><span>Released an <a href="https://doi.org/10.5281/zenodo.23888099">open indoor air quality dataset</a> (46,897 readings from a hand-built ESP32 monitor) on Zenodo.</span></li>
-    <li><span class="when">Nov 2026</span><span>Two IoT papers, on TinyML air quality forecasting and on cross-network IoT intrusion detection, are under review at <i>SN Computer Science</i>.</span></li>
-    <li><span class="when">Jul 2026</span><span>Paper on environmental sound classification <a href="https://doi.org/10.59256/indjcst.20260502098">published</a> in the <i>Indian Journal of Computer Science and Technology</i>.</span></li>
-    <li><span class="when">Jan 2026</span><span>Completed my BSc in Computer Science &amp; Engineering at Daffodil International University.</span></li>
+  <div class="sec-head"><p class="kicker">Updates</p><h2>News</h2></div>
+  <ul class="timeline prose">
+    <li><span class="when">Nov 2026</span>Released an <a href="https://doi.org/10.5281/zenodo.23888099">open indoor air quality dataset</a> (46,897 readings from a hand-built ESP32 monitor) on Zenodo.</li>
+    <li><span class="when">Nov 2026</span>Two IoT papers, on TinyML air quality forecasting and on cross-network IoT intrusion detection, are under review at <i>SN Computer Science</i>.</li>
+    <li><span class="when">Jul 2026</span>Paper on environmental sound classification <a href="https://doi.org/10.59256/indjcst.20260502098">published</a> in the <i>Indian Journal of Computer Science and Technology</i>.</li>
+    <li><span class="when">Jan 2026</span>Completed my BSc in Computer Science &amp; Engineering at Daffodil International University.</li>
   </ul>
 </section>
 
 <section id="research">
-  <h2>Research</h2>
+  <div class="sec-head"><p class="kicker">Selected work</p><h2>Research</h2></div>
 
-  <div class="card">
+  <article class="card">
+    <div class="card-top"><span class="pill sub">Under review</span><span class="venue">SN Computer Science</span></div>
     <h3>Low-Cost Indoor Air Quality Monitoring and Short-Term Forecasting on ESP32 Using a Humidity-Compensated MOS Sensor and TinyML</h3>
-    <div class="venue">Submitted to SN Computer Science</div>
     <figure>
       <a href="images/air-quality-monitor.webp"><img src="images/air-quality-monitor.webp" alt="The hand-built air quality monitor: ESP32 DevKit, MP-135 gas sensor, DHT22, SSD1306 OLED and USB-C 5 V input, powered by a power bank" loading="lazy"></a>
       <figcaption>The hand-built monitor: ESP32 DevKit, MP-135 MOS gas sensor, DHT22, SSD1306 OLED and USB-C 5 V input.</figcaption>
     </figure>
-    <ul>
+    <ul class="points">
       <li>Designed and hand-wired an ESP32 + Winsen MP-135 MOS gas sensor + DHT22 monitor and deployed it in an occupied room in Dhaka</li>
       <li>Built a humidity- and temperature-compensated, drift-robust relative Pollution Index with a rolling 3-hour baseline</li>
       <li>Exported a 60-tree LightGBM forecaster to C and ran it on the ESP32, beating a persistence baseline at 2, 5 and 10-minute horizons</li>
@@ -207,12 +327,12 @@
       <a class="btn" href="https://github.com/masumkawsar/indoor-air-quality-esp32-dataset">Data &amp; code</a>
       <a class="btn" href="https://masumkawsar.github.io/room-air-monitor/">Live dashboard</a>
     </div>
-  </div>
+  </article>
 
-  <div class="card">
+  <article class="card">
+    <div class="card-top"><span class="pill sub">Under review</span><span class="venue">SN Computer Science</span></div>
     <h3>Local Labels Beat Public Data: Cross-Network Evaluation of Lightweight and Explainable IoT Intrusion Detectors</h3>
-    <div class="venue">Submitted to SN Computer Science</div>
-    <ul>
+    <ul class="points">
       <li>Evaluated five model families and nine microcontroller-sized models on four public NetFlow-v2 datasets, over 10 seeds with Holm-corrected Wilcoxon tests</li>
       <li>Showed that detectors that look excellent within one dataset collapse on other networks (62% of cross-dataset pairs below 0.5 ROC-AUC), and explained why with SHAP and distribution-shift analysis</li>
       <li>With only 1,000 local labels, a tiny depth-4 decision tree beat tuned Random Forest and XGBoost (≤ 0.76 MCC)</li>
@@ -226,12 +346,12 @@
     <div class="links">
       <a class="btn" href="https://github.com/masumkawsar/iot-ids-cross-network">Code &amp; ESP32 benchmark</a>
     </div>
-  </div>
+  </article>
 
-  <div class="card">
+  <article class="card">
+    <div class="card-top"><span class="pill sub">Under review</span><span class="venue">Network Modeling Analysis in Health Informatics and Bioinformatics</span></div>
     <h3>Explainable Glaucoma Detection from Retinal Fundus Images</h3>
-    <div class="venue">Submitted to Network Modeling Analysis in Health Informatics and Bioinformatics</div>
-    <ul>
+    <ul class="points">
       <li>Compared SVM, XGBoost, DenseNet121 and EfficientNetB3 on ~6,000 fundus images using HOG, LBP and color-histogram features, transfer learning and Grad-CAM</li>
       <li>Deployed the best model in <i>GlaucomaDetect</i>, a Flask web application</li>
     </ul>
@@ -239,12 +359,12 @@
       <div class="stat"><b>90.33%</b>accuracy (DenseNet121)</div>
       <div class="stat"><b>97.13</b>AUC</div>
     </div>
-  </div>
+  </article>
 
-  <div class="card">
+  <article class="card">
+    <div class="card-top"><span class="pill pub">Published</span><span class="venue">Indian Journal of Computer Science and Technology, 2026</span></div>
     <h3>Environmental Sound Classification with Optimized ANN and SVM Models</h3>
-    <div class="venue">Published in Indian Journal of Computer Science and Technology, 2026</div>
-    <ul>
+    <ul class="points">
       <li>80-dimensional MFCC features on UrbanSound8K, tuned with KerasTuner and GridSearchCV</li>
       <li>Deployed as <i>UrbanSoundAI</i>, a Flask app with waveform, Mel-spectrogram and MFCC views</li>
     </ul>
@@ -255,69 +375,125 @@
     <div class="links">
       <a class="btn" href="https://doi.org/10.59256/indjcst.20260502098">Paper (DOI)</a>
     </div>
-  </div>
+  </article>
 
-  <h3 style="margin-top:28px; margin-bottom:12px">Hardware projects</h3>
+  <h3 class="hw-title">Hardware projects</h3>
   <div class="hw">
-    <div class="card">
-      <div class="single"><a href="images/water-level-system-labeled.webp"><img src="images/water-level-system-labeled.webp" alt="Water level prototype: two water tanks, an ultrasonic sensor and a relay module on a model base" loading="lazy"></a></div>
-      <h3>Smart Water Level Monitor &amp; Automatic Pump Control</h3>
-      <p>ESP32 and ultrasonic sensor show the live water level on an OLED screen. A relay switches the pump on and off automatically, with a buzzer alert and remote monitoring over Blynk IoT.</p>
-    </div>
-    <div class="card">
-      <div class="gallery">
+    <article class="card">
+      <div class="media"><a href="images/water-level-system-labeled.webp"><img src="images/water-level-system-labeled.webp" alt="Water level prototype: two water tanks, an ultrasonic sensor and a relay module on a model base" loading="lazy"></a></div>
+      <div>
+        <h3>Smart Water Level Monitor &amp; Automatic Pump Control</h3>
+        <p>ESP32 and ultrasonic sensor show the live water level on an OLED screen. A relay switches the pump on and off automatically, with a buzzer alert and remote monitoring over Blynk IoT.</p>
+      </div>
+    </article>
+    <article class="card">
+      <div class="media two">
         <a href="images/robot-car-front-labeled.webp"><img src="images/robot-car-front-labeled.webp" alt="Robot car front view with the ultrasonic sensor on a servo mount" loading="lazy"></a>
-        <a href="images/robot-car-electronics-labeled.webp"><img src="images/robot-car-electronics-labeled.webp" alt="Robot car electronics: Arduino with motor driver shield, 18650 battery pack, USB-C charging modules and power switch" loading="lazy"></a>      </div>
-      <h3>Obstacle-Avoiding Robot Car</h3>
-      <p>Arduino with a motor driver shield and an ultrasonic sensor on a servo that scans for obstacles and steers around them on its own. Powered by rechargeable 18650 cells with USB-C charging modules.</p>
-    </div>
+        <a href="images/robot-car-electronics-labeled.webp"><img src="images/robot-car-electronics-labeled.webp" alt="Robot car electronics: Arduino with motor driver shield, 18650 battery pack, USB-C charging modules and power switch" loading="lazy"></a>
+      </div>
+      <div>
+        <h3>Obstacle-Avoiding Robot Car</h3>
+        <p>Arduino with a motor driver shield and an ultrasonic sensor on a servo that scans for obstacles and steers around them on its own. Powered by rechargeable 18650 cells with USB-C charging modules.</p>
+      </div>
+    </article>
   </div>
 </section>
 
 <section id="publications">
-  <h2>Publications</h2>
+  <div class="sec-head"><p class="kicker">Papers</p><h2>Publications</h2></div>
   <ol class="pubs">
-    <li>M. A. Mridu, <b>M. M. Kawsar</b>. “Comparative Study of Optimized ANN and SVM Models for Environmental Sound Classification with Practical Web-Based Deployment.” <i>Indian Journal of Computer Science and Technology (INDJCST)</i>, Vol. 5, Issue 2, pp. 904–910, 2026. <a href="https://doi.org/10.59256/indjcst.20260502098">doi:10.59256/indjcst.20260502098</a> <span class="status pub">Published</span></li>
-    <li><b>M. M. Kawsar</b>. “Low-Cost Indoor Air Quality Monitoring and Short-Term Forecasting on ESP32 Using a Humidity-Compensated MOS Sensor and TinyML.” <i>SN Computer Science</i>. <span class="status sub">Under review</span></li>
-    <li><b>M. M. Kawsar</b>, M. A. Mridu. “Local Labels Beat Public Data: Cross-Network Evaluation of Lightweight and Explainable IoT Intrusion Detectors.” <i>SN Computer Science</i>. <span class="status sub">Under review</span></li>
-    <li>M. A. Mridu, <b>M. M. Kawsar</b>. “Comparative Evaluation of Machine Learning and Transfer-Learning-Based Deep Learning Models for Explainable Glaucoma Detection from Retinal Fundus Images.” <i>Network Modeling Analysis in Health Informatics and Bioinformatics</i>. <span class="status sub">Under review</span></li>
+    <li>
+      <span class="pub-title">Comparative Study of Optimized ANN and SVM Models for Environmental Sound Classification with Practical Web-Based Deployment</span>
+      <span class="pub-meta">M. A. Mridu, <b>M. M. Kawsar</b> · <i>Indian Journal of Computer Science and Technology (INDJCST)</i>, Vol. 5, Issue 2, pp. 904–910, 2026</span>
+      <div class="pub-foot"><span class="pill pub">Published</span><a href="https://doi.org/10.59256/indjcst.20260502098">doi:10.59256/indjcst.20260502098</a></div>
+    </li>
+    <li>
+      <span class="pub-title">Low-Cost Indoor Air Quality Monitoring and Short-Term Forecasting on ESP32 Using a Humidity-Compensated MOS Sensor and TinyML</span>
+      <span class="pub-meta"><b>M. M. Kawsar</b> · <i>SN Computer Science</i></span>
+      <div class="pub-foot"><span class="pill sub">Under review</span></div>
+    </li>
+    <li>
+      <span class="pub-title">Local Labels Beat Public Data: Cross-Network Evaluation of Lightweight and Explainable IoT Intrusion Detectors</span>
+      <span class="pub-meta"><b>M. M. Kawsar</b>, M. A. Mridu · <i>SN Computer Science</i></span>
+      <div class="pub-foot"><span class="pill sub">Under review</span></div>
+    </li>
+    <li>
+      <span class="pub-title">Comparative Evaluation of Machine Learning and Transfer-Learning-Based Deep Learning Models for Explainable Glaucoma Detection from Retinal Fundus Images</span>
+      <span class="pub-meta">M. A. Mridu, <b>M. M. Kawsar</b> · <i>Network Modeling Analysis in Health Informatics and Bioinformatics</i></span>
+      <div class="pub-foot"><span class="pill sub">Under review</span></div>
+    </li>
   </ol>
 </section>
 
 <section id="education">
-  <h2>Education</h2>
-  <div class="edu">
-    <div><b>BSc in Computer Science &amp; Engineering</b><br><span class="muted">Daffodil International University, Bangladesh · CGPA 3.48 / 4.00</span></div>
-    <div class="yr">2021 – 2026</div>
+  <div class="sec-head"><p class="kicker">Background</p><h2>Education</h2></div>
+  <div class="edu-list">
+    <div class="edu">
+      <div><b>BSc in Computer Science &amp; Engineering</b><br><span class="muted">Daffodil International University, Bangladesh · CGPA 3.48 / 4.00</span></div>
+      <span class="yr">2021 – 2026</span>
+    </div>
+    <div class="edu">
+      <div><b>Higher Secondary Certificate (Science)</b><br><span class="muted">Collectorate School &amp; College, Rangpur · GPA 5.00 / 5.00</span></div>
+      <span class="yr">2020</span>
+    </div>
+    <div class="edu">
+      <div><b>Secondary School Certificate (Science)</b><br><span class="muted">Raipur BL High School, Pirganj, Rangpur · GPA 5.00 / 5.00</span></div>
+      <span class="yr">2018</span>
+    </div>
   </div>
-  <div class="edu">
-    <div><b>Higher Secondary Certificate (Science)</b><br><span class="muted">Collectorate School &amp; College, Rangpur · GPA 5.00 / 5.00</span></div>
-    <div class="yr">2020</div>
+  <div class="coursework">
+    <p class="subhead" style="margin-top:0">Relevant coursework</p>
+    <div class="chips" style="margin-top:0">
+      <span class="chip">Big Data and IoT</span><span class="chip">Microprocessor, Embedded System and IoT</span><span class="chip">Computer Networks</span>
+      <span class="chip">Information Security</span><span class="chip">Artificial Intelligence</span><span class="chip">Data Mining and Machine Learning</span>
+    </div>
   </div>
-  <div class="edu">
-    <div><b>Secondary School Certificate (Science)</b><br><span class="muted">Raipur BL High School, Pirganj, Rangpur · GPA 5.00 / 5.00</span></div>
-    <div class="yr">2018</div>
-  </div>
-  <p class="muted" style="margin-top:6px">Relevant coursework: Big Data and IoT · Microprocessor, Embedded System and IoT · Computer Networks · Information Security · Artificial Intelligence · Data Mining and Machine Learning</p>
 </section>
 
 <section id="skills">
-  <h2>Skills</h2>
-  <dl class="skills">
-    <dt>IoT &amp; embedded</dt><dd>ESP32, Arduino, Embedded C/C++, circuit design &amp; prototyping, sensor interfacing &amp; calibration, humidity compensation, TinyML, model-to-C export, Blynk IoT</dd>
-    <dt>Machine learning</dt><dd>Time-series forecasting, gradient boosting, deep &amp; transfer learning, explainable AI (SHAP, Grad-CAM), IoT intrusion detection</dd>
-    <dt>Evaluation</dt><dd>Nested grouped cross-validation, Wilcoxon tests with Holm correction, MCC, ROC-AUC, Macro-F1</dd>
-    <dt>Libraries</dt><dd>TensorFlow, Keras, scikit-learn, XGBoost, LightGBM, SHAP, OpenCV, Librosa, Flask</dd>
-    <dt>Languages &amp; tools</dt><dd>Python, C, C++, Java · Git, Jupyter, Google Colab, VS Code</dd>
-  </dl>
+  <div class="sec-head"><p class="kicker">Toolbox</p><h2>Skills</h2></div>
+  <div class="skills">
+    <div class="skill">
+      <h4>IoT &amp; embedded</h4>
+      <div class="chips"><span class="chip">ESP32</span><span class="chip">Arduino</span><span class="chip">Embedded C/C++</span><span class="chip">Circuit design &amp; prototyping</span><span class="chip">Sensor interfacing &amp; calibration</span><span class="chip">Humidity compensation</span><span class="chip">TinyML</span><span class="chip">Model-to-C export</span><span class="chip">Blynk IoT</span></div>
+    </div>
+    <div class="skill">
+      <h4>Machine learning</h4>
+      <div class="chips"><span class="chip">Time-series forecasting</span><span class="chip">Gradient boosting</span><span class="chip">Deep &amp; transfer learning</span><span class="chip">Explainable AI (SHAP, Grad-CAM)</span><span class="chip">IoT intrusion detection</span></div>
+    </div>
+    <div class="skill">
+      <h4>Evaluation</h4>
+      <div class="chips"><span class="chip">Nested grouped cross-validation</span><span class="chip">Wilcoxon tests with Holm correction</span><span class="chip">MCC</span><span class="chip">ROC-AUC</span><span class="chip">Macro-F1</span></div>
+    </div>
+    <div class="skill">
+      <h4>Libraries</h4>
+      <div class="chips"><span class="chip">TensorFlow</span><span class="chip">Keras</span><span class="chip">scikit-learn</span><span class="chip">XGBoost</span><span class="chip">LightGBM</span><span class="chip">SHAP</span><span class="chip">OpenCV</span><span class="chip">Librosa</span><span class="chip">Flask</span></div>
+    </div>
+    <div class="skill wide">
+      <h4>Languages &amp; tools</h4>
+      <div class="chips"><span class="chip">Python</span><span class="chip">C</span><span class="chip">C++</span><span class="chip">Java</span><span class="chip">Git</span><span class="chip">Jupyter</span><span class="chip">Google Colab</span><span class="chip">VS Code</span></div>
+    </div>
+  </div>
 </section>
 
 </main>
 
 <footer><div class="wrap">
-  Open to research collaboration ·
-  <a href="mailto:masumkawsarpavel@gmail.com">masumkawsarpavel@gmail.com</a>
+  <span>Open to research collaboration · <a href="mailto:masumkawsarpavel@gmail.com">masumkawsarpavel@gmail.com</a></span>
+  <span>© 2026 Md Masum Kawsar</span>
 </div></footer>
 
+<script>
+  (function () {
+    var root = document.documentElement, btn = document.getElementById('themeBtn');
+    var mq = window.matchMedia ? window.matchMedia('(prefers-color-scheme: dark)') : null;
+    function current() { return root.getAttribute('data-theme') || (mq && mq.matches ? 'dark' : 'light'); }
+    btn.addEventListener('click', function () {
+      var next = current() === 'dark' ? 'light' : 'dark';
+      root.setAttribute('data-theme', next);
+      try { localStorage.setItem('theme', next); } catch (e) {}
+    });
+  })();
+</script>
 </body>
 </html>
