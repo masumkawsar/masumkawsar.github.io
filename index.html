@@ -47,8 +47,8 @@
   a:hover { text-decoration: underline; }
   b, strong { color: var(--text); font-weight: 600; }
   i { font-style: italic; }
-  .wrap { max-width: 960px; margin: 0 auto; padding: 0 20px; }
-  .prose { max-width: 70ch; }
+  .wrap { max-width: 900px; margin: 0 auto; padding: 0 20px; }
+  .prose { max-width: none; }
 
   /* ---------- nav ---------- */
   nav { position: sticky; top: 0; z-index: 10; background: color-mix(in srgb, var(--bg) 86%, transparent);
@@ -72,8 +72,8 @@
   }
 
   /* ---------- hero ---------- */
-  header.hero { padding: 64px 0 52px; display: grid; grid-template-columns: 184px 1fr; gap: 44px; align-items: center; }
-  .avatar { width: 184px; height: 184px; border-radius: 50%; object-fit: cover; display: block;
+  header.hero { padding: 64px 0 52px; display: grid; grid-template-columns: 176px 1fr; gap: 40px; align-items: center; }
+  .avatar { width: 176px; height: 176px; border-radius: 50%; object-fit: cover; display: block;
             border: 4px solid var(--surface); box-shadow: 0 0 0 1px var(--line), var(--shadow); }
   .eyebrow { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; letter-spacing: .02em;
              color: var(--accent); background: var(--accent-soft); padding: 5px 12px; border-radius: 999px; margin-bottom: 14px; }
@@ -82,9 +82,9 @@
        letter-spacing: -.015em; margin: 0 0 10px; }
   .tagline { font-size: 18.5px; color: var(--text); margin: 0 0 6px; font-weight: 500; }
   .role { color: var(--muted); margin: 0 0 22px; font-size: 15px; }
-  .links { display: flex; flex-wrap: wrap; gap: 8px; }
-  .btn { display: inline-flex; align-items: center; gap: 7px; padding: 8px 14px; border: 1px solid var(--line); border-radius: 10px;
-         background: var(--surface); color: var(--text); font-size: 14px; font-weight: 500; line-height: 1.2;
+  .links { display: flex; flex-wrap: wrap; gap: 7px; }
+  .btn { display: inline-flex; align-items: center; gap: 6px; padding: 8px 10px; border: 1px solid var(--line); border-radius: 10px;
+         background: var(--surface); color: var(--text); font-size: 13.5px; font-weight: 500; line-height: 1.2; white-space: nowrap;
          transition: border-color .2s, transform .2s, background-color .2s; }
   .btn:hover { border-color: var(--accent); text-decoration: none; transform: translateY(-1px); }
   .btn.primary { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
@@ -151,6 +151,7 @@
   .hw .media img { width: 100%; height: auto; border-radius: 12px; display: block; background: var(--surface-2); }
   .hw .media.two { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
   .hw .media a { display: block; }
+  .hw .card.stack { grid-template-columns: 1fr; gap: 18px; }
   .hw p { color: var(--muted); font-size: 15px; margin: 0; }
 
   /* publications */
@@ -391,7 +392,7 @@
         <p>ESP32 and ultrasonic sensor show the live water level on an OLED screen. A relay switches the pump on and off automatically, with a buzzer alert and remote monitoring over Blynk IoT.</p>
       </div>
     </article>
-    <article class="card">
+    <article class="card stack">
       <div class="media two">
         <a href="images/robot-car-front-labeled.webp"><img src="images/robot-car-front-labeled.webp" alt="Robot car front view with the ultrasonic sensor on a servo mount" loading="lazy"></a>
         <a href="images/robot-car-electronics-labeled.webp"><img src="images/robot-car-electronics-labeled.webp" alt="Robot car electronics: Arduino with motor driver shield, 18650 battery pack, USB-C charging modules and power switch" loading="lazy"></a>
