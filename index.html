@@ -211,10 +211,6 @@
   .prose p, .timeline li, .card ul.points li, .dir p, .hw p, figcaption, .pub-meta {
     text-align: justify; text-justify: inter-word; hyphens: auto; -webkit-hyphens: auto;
   }
-  /* on narrow phones justified lines leave big word gaps, so align left there */
-  @media (max-width: 480px) {
-    .prose p, .timeline li, .card ul.points li, .dir p, .hw p, figcaption, .pub-meta { text-align: left; }
-  }
 
   @media (max-width: 460px) { nav .l.hide-xs { display: none; } }
   @media (prefers-reduced-motion: reduce) { * { transition: none !important; scroll-behavior: auto !important; } }
